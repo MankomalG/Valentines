@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Will you be my Valentine? 💘</title>
+  <title>Valentine + Fun Quiz 💘</title>
 
   <style>
     :root{
@@ -18,20 +18,23 @@
 
     *{ box-sizing:border-box; }
     body{
-      margin:0;
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-      color:var(--text);
-      background: radial-gradient(1000px 600px at 20% 20%, #fff7, transparent 60%),
-                  radial-gradient(900px 500px at 80% 30%, #fff6, transparent 55%),
-                  linear-gradient(135deg, var(--bg1), var(--bg2));
-      overflow:hidden;
-      padding: 20px;
-    }
+        margin:0;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;   /* allow content to grow downward */
+        font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+        color:var(--text);
+        background:
+          radial-gradient(1000px 600px at 20% 20%, #fff7, transparent 60%),
+          radial-gradient(900px 500px at 80% 30%, #fff6, transparent 55%),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+        overflow-y:auto;          /* ✅ enable vertical scrolling */
+        overflow-x:hidden;
+        padding: 20px 20px 60px;  /* extra bottom space */
+      }
 
-    /* floating hearts background */
+    /* Floating hearts background */
     .heart{
       position:absolute;
       font-size: 18px;
@@ -47,13 +50,14 @@
     }
 
     .card{
-      width:min(520px, 92vw);
+       margin-top: 20px;
+      width:min(560px, 92vw);
       background: var(--card);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,.5);
       border-radius: 28px;
       box-shadow: var(--shadow);
-      padding: 28px 22px 22px;
+      padding: 26px 22px 22px;
       text-align:center;
       position:relative;
     }
@@ -88,7 +92,7 @@
     }
     .sub{
       margin: 0 auto 18px;
-      max-width: 40ch;
+      max-width: 50ch;
       font-size: 15px;
       opacity: .85;
     }
@@ -100,8 +104,9 @@
       border-radius: 24px;
       display:grid;
       place-items:center;
-      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.2)),
-                  linear-gradient(135deg, var(--pink), var(--pink2));
+      background:
+        radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.2)),
+        linear-gradient(135deg, var(--pink), var(--pink2));
       transform: rotate(6deg);
       box-shadow: 0 18px 40px rgba(255,77,109,.35);
       position:relative;
@@ -128,12 +133,13 @@
 
     button{
       border:0;
-      padding: 12px 18px;
+      padding: 12px 16px;
       border-radius: 14px;
       font-size: 16px;
       cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      transition: transform .12s ease, filter .12s ease;
       font-weight: 650;
+      user-select:none;
     }
 
     .yes{
@@ -147,13 +153,13 @@
       background: rgba(255,255,255,.75);
       border: 1px solid rgba(0,0,0,.08);
       box-shadow: 0 10px 18px rgba(0,0,0,.10);
-      position:relative; /* will become absolute when it starts dodging */
+      position:relative;
     }
     .no:hover{ transform: translateY(-2px); }
 
     .msg{
-      margin-top: 18px;
-      min-height: 56px;
+      margin-top: 16px;
+      min-height: 44px;
       font-size: 18px;
       font-weight: 650;
     }
@@ -173,7 +179,7 @@
       margin-top: 8px;
     }
 
-    /* confetti */
+    /* Confetti */
     .confetti{
       position:absolute;
       width:10px; height:14px;
@@ -188,6 +194,102 @@
         opacity: 0.95;
       }
     }
+
+    /* Quiz UI */
+    .quiz{
+      max-height: 55vh;
+      overflow-y: auto;
+      text-align:left;
+      margin-top: 14px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .quizTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.07);
+      white-space:nowrap;
+    }
+
+    .qTitle{
+      font-size: 16px;
+      font-weight: 750;
+      margin: 2px 0 10px;
+      text-align:center;
+    }
+
+    .options{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      justify-content:center;
+    }
+    .opt{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 18px rgba(0,0,0,.08);
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+    .opt:hover{ transform: translateY(-2px); }
+
+    .barWrap{
+      flex:1;
+      height: 10px;
+      background: rgba(0,0,0,.08);
+      border-radius: 999px;
+      overflow:hidden;
+      min-width: 160px;
+    }
+    .bar{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .summary{
+      margin-top: 12px;
+      text-align:left;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .summaryItem{
+      padding: 10px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(0,0,0,.06);
+      margin: 8px 0;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      justify-content:center;
+      margin-top: 12px;
+    }
+
+    .secondary{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 18px rgba(0,0,0,.08);
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -197,7 +299,7 @@
 
     <div class="bigHeart"><span>💘</span></div>
     <h1>Will you be my Valentine?</h1>
-    <p class="sub">I promise snacks, compliments, and unlimited “you’re cute” energy.</p>
+    <p class="sub" id="subtitle">I promise good vibes, snacks, and main-character energy ✨</p>
 
     <div class="buttons" id="buttons">
       <button class="yes" id="yesBtn">Yes 💖</button>
@@ -206,6 +308,27 @@
 
     <div class="msg" id="msg"></div>
     <div class="tiny" id="hint">Tip: try hovering the “No” button 😄</div>
+
+    <!-- Quiz container (hidden until YES) -->
+    <div class="quiz" id="quiz" style="display:none;">
+      <div class="quizTop">
+        <div class="pill" id="stepPill">Question 1 / 10</div>
+        <div class="barWrap" aria-label="progress">
+          <div class="bar" id="bar"></div>
+        </div>
+        <div class="pill" id="moodPill">✨ fun mode</div>
+      </div>
+
+      <div class="qTitle" id="qTitle"></div>
+      <div class="options" id="options"></div>
+
+      <div class="actions" id="afterActions" style="display:none;">
+        <button class="yes" id="restartBtn">Replay 🔁</button>
+        <button class="secondary" id="downloadBtn">Download answers ⬇️</button>
+      </div>
+
+      <div class="summary" id="summary" style="display:none;"></div>
+    </div>
   </div>
 
   <script>
@@ -215,9 +338,20 @@
     const hint   = document.getElementById("hint");
     const buttons = document.getElementById("buttons");
     const card = document.getElementById("card");
+    const subtitle = document.getElementById("subtitle");
+
+    const quiz = document.getElementById("quiz");
+    const stepPill = document.getElementById("stepPill");
+    const bar = document.getElementById("bar");
+    const qTitle = document.getElementById("qTitle");
+    const options = document.getElementById("options");
+    const summary = document.getElementById("summary");
+    const afterActions = document.getElementById("afterActions");
+    const restartBtn = document.getElementById("restartBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
 
     // --- Floating hearts in background ---
-    const hearts = ["💗","💖","💘","💝","💞","💕"];
+    const hearts = ["💗","💖","💘","💝","💞","💕","✨","🌸"];
     function spawnHeart(){
       const el = document.createElement("div");
       el.className = "heart";
@@ -225,11 +359,11 @@
       el.style.left = Math.random() * 100 + "vw";
       el.style.fontSize = (12 + Math.random()*26) + "px";
       el.style.animationDuration = (4 + Math.random()*5) + "s";
-      el.style.opacity = (0.25 + Math.random()*0.5).toFixed(2);
+      el.style.opacity = (0.22 + Math.random()*0.55).toFixed(2);
       document.body.appendChild(el);
       el.addEventListener("animationend", () => el.remove());
     }
-    setInterval(spawnHeart, 260);
+    setInterval(spawnHeart, 240);
 
     // --- Typewriter message ---
     function typewriter(text){
@@ -244,7 +378,7 @@
           clearInterval(t);
           span.classList.remove("type");
         }
-      }, 35);
+      }, 28);
     }
 
     // --- Confetti burst ---
@@ -255,23 +389,21 @@
         c.style.left = Math.random() * 100 + "vw";
         c.style.background = `hsl(${Math.random()*360} 90% 65%)`;
         c.style.animationDuration = (2.5 + Math.random()*2.2) + "s";
-        c.style.transform = `translateY(0) rotate(${Math.random()*180}deg)`;
         document.body.appendChild(c);
         c.addEventListener("animationend", () => c.remove());
       }
     }
 
-    // --- No button dodge (but keep it inside the card) ---
+    // --- No button dodge (kept inside the card area) ---
     let dodges = 0;
     function dodgeNo(){
       dodges++;
-      // make it absolute inside buttons area
       noBtn.style.position = "absolute";
 
       const area = buttons.getBoundingClientRect();
       const btn = noBtn.getBoundingClientRect();
-
       const padding = 8;
+
       const maxX = area.width - btn.width - padding;
       const maxY = area.height - btn.height - padding;
 
@@ -281,33 +413,137 @@
       noBtn.style.left = x + "px";
       noBtn.style.top  = y + "px";
 
-      // playful hint escalation
       if(dodges === 3) hint.textContent = "Okayyyy that button is slippery 😭";
       if(dodges === 6) hint.textContent = "At this point… just say yes 😌💖";
       if(dodges >= 9) hint.textContent = "No has left the chat 🫠";
     }
-
     noBtn.addEventListener("mouseover", dodgeNo);
     noBtn.addEventListener("click", dodgeNo);
+    noBtn.addEventListener("mouseover", () => { buttons.style.minHeight = "92px"; }, { once:true });
 
-    // --- Yes click ---
-    yesBtn.addEventListener("click", () => {
+    // --- Quiz questions (NOT only couple oriented) ---
+    const QUESTIONS = [
+      { q: "Pick a vibe for today ✨", a: ["Cozy ☕", "Chaotic 😭", "Productive 💪", "Cute 💖"] },
+      { q: "Choose a snack champion 🍿", a: ["Chips", "Chocolate", "Fruit", "Ice cream"] },
+      { q: "Your energy right now is…", a: ["100% 🔥", "75% 😌", "40% 🫠", "Need coffee ☕"] },
+      { q: "If we do something fun, it’s:", a: ["Movie 🎬", "Games 🎮", "Drive 🚗", "Food hunt 🍔"] },
+      { q: "Pick a color mood 🎨", a: ["Pink 💗", "Blue 💙", "Purple 💜", "Black 🖤"] },
+      { q: "What’s your comfort thing?", a: ["Music 🎧", "Sleep 😴", "Gym 💪", "Talk 🫶"] },
+      { q: "A small thing that makes you happy:", a: ["Compliments 🥹", "Sunset 🌅", "Cute pets 🐾", "Good food 🍜"] },
+      { q: "Choose a superpower 🦸", a: ["Teleport 🚀", "Mind read 🧠", "Time pause ⏸️", "Unlimited money 💸"] },
+      { q: "Which one are you?", a: ["Planner 📅", "Go with flow 🌊", "Last minute 😅", "Depends 🫠"] },
+      { q: "Final check ✅ Will you be my Valentine?", a: ["Yes 💖", "Of course 😌", "Forever 💍", "Absolutely 🥰"] }
+    ];
+
+    let idx = 0;
+    const answers = [];
+
+    function updateProgress(){
+      stepPill.textContent = `Question ${idx+1} / ${QUESTIONS.length}`;
+      const pct = Math.round(((idx) / QUESTIONS.length) * 100);
+      bar.style.width = pct + "%";
+    }
+
+    function renderQuestion(){
+      updateProgress();
+      const item = QUESTIONS[idx];
+      qTitle.textContent = item.q;
+      options.innerHTML = "";
+
+      item.a.forEach(choice => {
+        const b = document.createElement("button");
+        b.className = "opt";
+        b.textContent = choice;
+        b.onclick = () => {
+          answers.push({ question: item.q, answer: choice });
+          idx++;
+
+          // little micro-feedback
+          confettiBurst(16);
+
+          if(idx >= QUESTIONS.length){
+            showSummary();
+          } else {
+            renderQuestion();
+          }
+        };
+        options.appendChild(b);
+      });
+    }
+
+    function showSummary(){
+      // progress full
+      bar.style.width = "100%";
+      stepPill.textContent = `Done ✅`;
+
+      qTitle.textContent = "Aww cute. Here are your answers 💖";
+      options.innerHTML = "";
+      summary.style.display = "block";
+      afterActions.style.display = "flex";
+
+      const lines = [];
+      summary.innerHTML = answers.map((x, i) => {
+        const line = `${i+1}. ${x.question} → ${x.answer}`;
+        lines.push(line);
+        return `<div class="summaryItem"><b>${i+1}.</b> ${x.question}<br><span style="opacity:.85">Answer:</span> ${x.answer}</div>`;
+      }).join("");
+
+      // also show a sweet message at top
+      typewriter("Okay that was adorable 🥹💖");
+      hint.textContent = "You can replay or download the answers below ✨";
+
+      // store for download
+      downloadBtn.onclick = () => {
+        const text =
+          "Valentine Quiz Answers 💘\n\n" +
+          lines.join("\n") +
+          "\n\nMade with 💖";
+        const blob = new Blob([text], {type:"text/plain"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "valentine-answers.txt";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      };
+
+      restartBtn.onclick = () => {
+        idx = 0;
+        answers.length = 0;
+        summary.style.display = "none";
+        afterActions.style.display = "none";
+        hint.textContent = "";
+        typewriter("One More Round? 😄✨");
+        renderQuestion();
+      };
+      summary.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function startExperience(){
       yesBtn.disabled = true;
       noBtn.disabled = true;
+      buttons.style.display = "none";
+      subtitle.textContent = "YAY!! 💖 Now 10 quick fun questions…";
       hint.textContent = "";
 
       card.style.transform = "scale(1.01)";
       card.style.transition = "transform .2s ease";
 
-      typewriter("YAY!! 💖🥰 You just made me the happiest human ever!");
+      typewriter("You just unlocked the fun quiz ✨");
       confettiBurst(140);
-    });
 
-    // Make buttons area taller so "No" has space to dodge
-    // (only after first dodge)
-    noBtn.addEventListener("mouseover", () => {
-      buttons.style.minHeight = "90px";
-    }, { once: true });
+      // show quiz
+      quiz.style.display = "block";
+      idx = 0;
+      answers.length = 0;
+      summary.style.display = "none";
+      afterActions.style.display = "none";
+      renderQuestion();
+    }
+
+    yesBtn.addEventListener("click", startExperience);
   </script>
 </body>
 </html>
